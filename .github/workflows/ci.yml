@@ -1,0 +1,15 @@
+name: CI
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: buildpacks/github-actions/setup-pack@v4.1.0
+    - name: Build
+      run: |
+        pack build sample-app --path . --builder cnbs/sample-builder:bionic
+    - run: docker run --rm sample-app
