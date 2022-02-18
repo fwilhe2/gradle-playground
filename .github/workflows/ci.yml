@@ -12,4 +12,5 @@ jobs:
     - name: Build
       run: |
         pack build sample-app --path . --builder cnbs/sample-builder:bionic
+    - run: pack inspect-image sample-app
     - run: docker run --rm sample-app
