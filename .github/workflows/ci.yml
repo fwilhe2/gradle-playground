@@ -13,8 +13,10 @@ jobs:
       run: |
         pack build sample-app --path . --builder cnbs/sample-builder:bionic
     - run: pack inspect-image sample-app
+    - run: docker inspect sample-app
+    - run: docker history sample-app
     - run: docker images sample-app
-    - run: docker run --rm sample-app
+    - run: docker run --rm sample-app java -cp build/libs/gradle-playground.jar gradle.playground.AppKt
   docker:
     runs-on: ubuntu-latest
     steps:
