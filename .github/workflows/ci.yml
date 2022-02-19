@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  buildpack:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -13,4 +13,16 @@ jobs:
       run: |
         pack build sample-app --path . --builder cnbs/sample-builder:bionic
     - run: pack inspect-image sample-app
+    - run: docker images sample-app
     - run: docker run --rm sample-app
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: |
+        docker build -t gradletest .
+    - run: docker inspect gradletest
+    - run: docker history gradletest
+    - run: docker images gradletest
+    - run: docker run --rm gradletest
